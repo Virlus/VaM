@@ -1,0 +1,55 @@
+class: VAMPolicy
+params:
+  pi_config_name: pi05_aloha_history_value_expert
+  ckpt_dir: ${checkpoint}
+  task: ${task}
+  device: cuda
+  obs_horizon: 4
+  downsample: 1
+  obs_time_interval: 1.0
+  enable_rtc: true
+  enable_human_rtc: true
+  human_rtc_action_shm: I2RTRobot_0_data
+  human_rtc_control_flag_shm: I2RTRobot_0_control_flag
+  human_rtc_prefix_attention_horizon: 20
+  human_rtc_velocity_decay_steps: 20
+  chunk_length: ${policy.chunk_length}
+  cfg_guidance_weight: 1.0
+fps: 2.0
+control_fps: ${action_executor.action_executor.execution_fps}
+value_prediction_query_fps: 100.0
+history_with_value: true
+enable_value_prediction: true
+chunk_length: 100
+master_device: OpenCVCameraDevice_${camera.ego_id}
+obs:
+  devices:
+  - OpenCVCameraDevice_${camera.ego_id}
+  - OpenCVCameraDevice_${camera.left_id}
+  - OpenCVCameraDevice_${camera.right_id}
+  - I2RTRobot_1
+controls:
+- shm: I2RTRobot_1_control
+  shape:
+  - 14
+  dtype: float64
+- shm: I2RTRobot_0_data
+  shape:
+  - 14
+  dtype: float64
+- shm: I2RTRobot_0_control_flag
+  shape:
+  - 1
+  dtype: float64
+reset:
+- device_name: I2RTRobot
+  device_id: 0
+  home_index: 0
+halt_and_home:
+- device_name: I2RTRobot
+  device_id: 0
+  home_index: 0
+- device_name: I2RTRobot
+  device_id: 1
+  home_index: 0
+infer_rollout: ${infer_rollout}

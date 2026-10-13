@@ -1,0 +1,119 @@
+# Offline DAgger warmup data collection: record policy rollouts and human corrections.
+defaults:
+- devices: i2rt_dual_bilateral
+- device_manager: infer_aloha
+- action_executor: infer_i2rt_joint_dual_shared
+- consumer: default
+- policy: vam
+- infer_rollout: default
+- storage: lerobot
+- upload: default
+- online_training: default
+- anomaly_config: i2rt
+- runtime: default
+- _self_
+mode: rollout
+component: policy
+check_only: false
+task: describe the task
+run_name: example_run
+start_index: 0
+paths:
+  project_root: .
+recording_output_dir: ${paths.project_root}/data/${mode}/${run_name}
+remote:
+  root: /path/to/cloud
+  host: example.invalid
+  port: 22
+  username: your_username
+  ssh_key_path: ~/.ssh/id_ed25519
+camera:
+  ego_id: 0
+  ego_serial: SET_EGO_SERIAL
+  left_id: 1
+  left_serial: SET_LEFT_SERIAL
+  right_id: 2
+  right_serial: SET_RIGHT_SERIAL
+robot:
+  dual_control_mode: true
+  takeover_alignment:
+    enabled: true
+    duration_s: 0.2
+    settle_timeout_s: 0.5
+  leader_home_joint_pos:
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  follower_home_joint_pos:
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  random_init_pose: true
+  random_init_pose_sync: true
+  random_init_pose_params:
+    position_radius_m: 0.1
+    rotation_euler_range_deg:
+    - 25.0
+    - 25.0
+    - 25.0
+    independent_per_arm: true
+    max_ik_attempts: 20
+    ik_max_iters: 200
+    ik_position_tolerance_m: 0.0001
+    ik_orientation_tolerance_deg: 0.2
+    seed: null
+    fallback_to_nominal_home: true
+    sync_target_path: /tmp/vam_i2rt_random_home_target.json
+    sync_wait_timeout_s: 15.0
+    sync_wait_before_read_s: 0.5
+    randomize_on_startup: true
+    randomize_on_episode_reset: true
+global_settings:
+  log_level: INFO
+  restart_on_failure: true
+  max_restart_attempts: 3
+  restart_delay: 2.0
+  device_init_delay: 12.0
+summary_shm: device_summary_data
+shared:
+  summary_shm_name: ${summary_shm}
+augmental_data_upload: ${upload}
+runtime:
+  python:
+    hardware: ${paths.project_root}/../.venv/bin/python
+    policy: ${paths.project_root}/../.venv/bin/python
+    lerobot: ${paths.project_root}/../.venv/bin/python
+    upload: ${paths.project_root}/../.venv/bin/python
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  job:
+    chdir: false
+checkpoint: /path/to/checkpoint
+device_manager:
+  device_manager:
+    params:
+      buffer_size: 100

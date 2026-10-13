@@ -1,0 +1,48 @@
+{
+  "opencv": "4.11.0",
+  "source_hashes": {
+    "source_12.npz": "f4796f2a346bc3c46d584922a451a64f27c6cc4078017ca7c1f7c935b93d69bc",
+    "source_240.npz": "e3300860380086aed067cc16a8548ab238079d5b091ae20fa1baedcf551e64b7",
+    "source_600.npz": "136154281e9ce4985beef04caa02986158d24a826470cab9ec67908bfc2c7684",
+    "source_80.npz": "64bc99e61968509411b2b237e85a1e45f24bba68ed2dca3f74c0ebb431534228",
+    "source_duplicate.npz": "a90a90a78b36e1dc97540f98ad01d4be72d8eefaadf4ba0f93b9fe215a609e9d",
+    "source_gaps.npz": "0cfddcf4110c9bfc086c3a6fe81537bc86fd25502286134b074c2d3e48b31cd8",
+    "source_rgb.npz": "e6e3292b9b37953d577a600346693d29bc2e27acd95058db5499d18fbef67f41",
+    "source_rgb64.npz": "f1f2a1db4efbca1cea010b545bd1e9bb026e9dfd48899ff1f278d0dc6faa58bb"
+  },
+  "cases": {
+    "12": {
+      "action": 3,
+      "value": 2
+    },
+    "240": {
+      "action": 72,
+      "value": 9
+    },
+    "600": {
+      "action": 180,
+      "value": 21
+    },
+    "80": {
+      "action": 24,
+      "value": 4
+    },
+    "duplicate": {
+      "action": 70,
+      "value": 9
+    },
+    "gaps": {
+      "action": 52,
+      "value": 6
+    },
+    "rgb": {
+      "action": 72,
+      "value": 9
+    },
+    "rgb64": {
+      "action": 72,
+      "value": 9
+    }
+  },
+  "converter_sha256": "f30b4a54c6fa5529010dd58db595d2d5fcfb5f23f5c052ffa20ff7337b054c05"
+}

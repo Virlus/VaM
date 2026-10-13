@@ -1,0 +1,137 @@
+# Data collection: record human demonstrations as paired LeRobot datasets.
+defaults:
+- devices: i2rt_dual_bilateral
+- device_manager: collect
+- action_executor: default
+- collection: aloha_lerobot
+- storage: lerobot
+- upload: default
+- online_training: default
+- anomaly_config: i2rt
+- runtime: default
+- _self_
+mode: collect
+component: collector
+check_only: false
+task: describe the task
+run_name: example_run
+start_index: 0
+paths:
+  project_root: .
+recording_output_dir: ${paths.project_root}/data/${mode}/${run_name}
+remote:
+  root: /path/to/cloud
+  host: example.invalid
+  port: 22
+  username: your_username
+  ssh_key_path: ~/.ssh/id_ed25519
+camera:
+  ego_id: 0
+  ego_serial: SET_EGO_SERIAL
+  left_id: 1
+  left_serial: SET_LEFT_SERIAL
+  right_id: 2
+  right_serial: SET_RIGHT_SERIAL
+robot:
+  dual_control_mode: false
+  leader_home_joint_pos:
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  follower_home_joint_pos:
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  - 0.0
+  - 1.15
+  - 1.0
+  - -0.45
+  - 0.0
+  - 0.0
+  - 0.99
+  random_init_pose: false
+  random_init_pose_sync: false
+  random_init_pose_params:
+    position_radius_m: 0.1
+    rotation_euler_range_deg:
+    - 25.0
+    - 25.0
+    - 25.0
+    independent_per_arm: true
+    max_ik_attempts: 20
+    ik_max_iters: 200
+    ik_position_tolerance_m: 0.0001
+    ik_orientation_tolerance_deg: 0.2
+    seed: null
+    fallback_to_nominal_home: true
+    sync_target_path: /tmp/vam_i2rt_random_home_target.json
+    sync_wait_timeout_s: 15.0
+    sync_wait_before_read_s: 0.5
+    randomize_on_startup: true
+    randomize_on_episode_reset: true
+global_settings:
+  log_level: INFO
+  restart_on_failure: true
+  max_restart_attempts: 3
+  restart_delay: 2.0
+  device_init_delay: 8.0
+summary_shm: device_summary_data
+shared:
+  summary_shm_name: ${summary_shm}
+augmental_data_upload: ${upload}
+runtime:
+  python:
+    hardware: ${paths.project_root}/../.venv/bin/python
+    policy: ${paths.project_root}/../.venv/bin/python
+    lerobot: ${paths.project_root}/../.venv/bin/python
+    upload: ${paths.project_root}/../.venv/bin/python
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  job:
+    chdir: false
+lerobot:
+  conversion_workers: 2
+  max_pending_episodes: 2
+  action_stride: 3
+  value_stride: 30
+consumer:
+  start_index: ${start_index}
+  output_dir: ${recording_output_dir}
+  task_name: ${task}
+  publication:
+    repo_ids:
+      action: ${run_name}
+      value: ${run_name}_value
+halt_and_home:
+- device_name: I2RTRobot
+  device_id: 0
+  home_index: 0
+- device_name: I2RTRobot
+  device_id: 1
+  home_index: 0
+recording:
+  save_interval: 0.001
+  queue_size: 5000
+  image_size: null
+  robot_type: I2RTRobot
+  enable_anomaly_detection: true
+online_training:
+  enabled: false
+  startup_checkpoint_dir: null

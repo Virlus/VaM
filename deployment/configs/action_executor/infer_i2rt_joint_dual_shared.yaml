@@ -1,0 +1,13 @@
+action_executor:
+  type: base_policy_runner
+  robot_control_shms:
+    - ${policy.controls[0]}
+  execution_fps: 100.0
+  chunk_length: ${policy.chunk_length}
+  signal_files: ${runtime.signal_files}
+
+  chunk_manager:
+    type: joint_action_manager
+    search_tolerance: 20
+    discount_factor: 0.998
+    direction_consistency_range: 10

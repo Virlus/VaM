@@ -1,0 +1,190 @@
+{
+  "inputs": {
+    "img_ego": "OpenCVCameraDevice_0",
+    "img_left": "OpenCVCameraDevice_1",
+    "img_right": "OpenCVCameraDevice_2",
+    "leader_joint_pos": "I2RTRobot_0",
+    "follower_joint_pos": "I2RTRobot_1"
+  },
+  "features": {
+    "base_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "left_wrist_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "right_wrist_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "state": {
+      "dtype": "float32",
+      "shape": [
+        14
+      ],
+      "names": [
+        "channels"
+      ]
+    },
+    "actions": {
+      "dtype": "float32",
+      "shape": [
+        100,
+        14
+      ],
+      "names": [
+        "window",
+        "channels"
+      ]
+    },
+    "reward": {
+      "dtype": "float32",
+      "shape": [
+        100
+      ],
+      "names": [
+        "reward"
+      ]
+    },
+    "value": {
+      "dtype": "float32",
+      "shape": [
+        1
+      ],
+      "names": [
+        "value"
+      ]
+    },
+    "success": {
+      "dtype": "float32",
+      "shape": [
+        1
+      ],
+      "names": [
+        "success"
+      ]
+    },
+    "next_base_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "next_left_wrist_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "next_right_wrist_image": {
+      "dtype": "video",
+      "shape": [
+        16,
+        16,
+        3
+      ],
+      "names": [
+        "height",
+        "width",
+        "channel"
+      ]
+    },
+    "next_state": {
+      "dtype": "float32",
+      "shape": [
+        14
+      ],
+      "names": [
+        "channels"
+      ]
+    },
+    "next_actions": {
+      "dtype": "float32",
+      "shape": [
+        100,
+        14
+      ],
+      "names": [
+        "window",
+        "channels"
+      ]
+    },
+    "data_source": {
+      "dtype": "float32",
+      "shape": [
+        1
+      ],
+      "names": [
+        "source"
+      ]
+    },
+    "terminate": {
+      "dtype": "float32",
+      "shape": [
+        1
+      ],
+      "names": [
+        "terminate"
+      ]
+    }
+  },
+  "conversion": {
+    "data_mode": "offline",
+    "window_size": 100,
+    "fps": 30,
+    "max_time_diff_ms": 50.0,
+    "reward_range": "binary",
+    "split_by_control_flag": false,
+    "latency_s": {
+      "img_ego": 0.033,
+      "img_left": 0.033,
+      "img_right": 0.033,
+      "leader_joint_pos": 0.0,
+      "follower_joint_pos": 0.0
+    }
+  },
+  "task_name": "stack lego blocks into a pyramid"
+}

@@ -1,0 +1,22 @@
+enable_device_manager: true
+# Global default for camera overlay image blending
+# Can be overridden per device in device config with enable_overlay: true/false
+camera_overlay_enabled: false
+
+# Signal file patterns for multiprocessing communication
+# These files are used for coordination between device_starter, consumers, devices, and policy_runner
+signal_files:
+  reset_signal: "/tmp/vam_reset_signal"
+  robot_home_index: "/tmp/vam_robot_home_index"
+  episode_signal_pattern: "/tmp/vam_episode_{signal}"
+  robot_home_command_pattern: "/tmp/vam_robot_{device_name}_{device_id}_home_command"
+  robot_teleop_start_command_pattern: "/tmp/vam_robot_{device_name}_{device_id}_teleop_start_command"
+  robot_teleop_discard_command_pattern: "/tmp/vam_robot_{device_name}_{device_id}_teleop_discard_command"
+  start_recording: "/tmp/vam_start_recording"
+  stop_recording: "/tmp/vam_stop_recording"
+  episode_result: "/tmp/vam_episode_result"
+  policy_runner_reset_command: "/tmp/vam_policy_runner_reset_command"
+  teleoperator_reset_command: "/tmp/vam_teleoperator_reset_command"
+  rollout_ready: "/tmp/vam_rollout_ready"
+  robot_halt_command_pattern: "/tmp/vam_robot_{device_name}_{device_id}_halt_command"
+  robot_halt_reply_pattern: "/tmp/vam_robot_{device_name}_{device_id}_halt_reply"

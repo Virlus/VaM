@@ -1,0 +1,27 @@
+checkpoint_download_method: rsync
+checkpoint_download_progress: true
+checkpoint_poll_interval: 10
+checkpoint_rsync_fallback_to_sftp: true
+complete_marker_names:
+- DONE
+- complete.txt
+current_policy_path: ${online_training.policy_directory}/current_policy.json
+enabled: false
+episode_policy_map_path: ${online_training.policy_directory}/episode-policy_id.json
+initial_checkpoint_id: base
+initial_checkpoint_index: 0
+initial_policy_id: 0
+local_checkpoint_root: ${online_training.policy_directory}/checkpoints
+local_latest_path: ${online_training.local_checkpoint_root}/latest.json
+max_current_policy_rollouts: 15
+policy_directory: ${paths.project_root}/data/online_training/${run_name}
+policy_rollout_limit_wait_interval: 10
+policy_rollout_state_path: ${recording_output_dir}/policy_rollout_state.json
+remote_checkpoint_root: ${remote.root}
+remote_latest_path: ${remote.root}/cloud_root/${run_name}/checkpoints/latest.json
+require_complete_marker: true
+resume_checkpoint_download: true
+sftp_connect_log_interval: 60
+startup_checkpoint_dir: ${policy.params.ckpt_dir}
+status_log_interval: 60
+update_current_symlink: true

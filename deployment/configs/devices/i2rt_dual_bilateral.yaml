@@ -1,0 +1,97 @@
+devices:
+  - class: "OpenCVCameraDevice"
+    device_id: ${camera.ego_id} # camera egocentric
+    realsense_serial: ${camera.ego_serial}
+    data_shape: [360, 640, 3]
+    fps: 30.0
+    data_dtype: "uint8"
+    buffer_size: 200
+    hardware_latency_ms: 33.0
+
+  - class: "OpenCVCameraDevice"
+    device_id: ${camera.left_id} # camera left
+    realsense_serial: ${camera.left_serial}
+    data_shape: [240, 320, 3]
+    fps: 30.0
+    data_dtype: "uint8"
+    buffer_size: 200
+    hardware_latency_ms: 33.0
+
+  - class: "OpenCVCameraDevice"
+    device_id: ${camera.right_id} # camera right
+    realsense_serial: ${camera.right_serial}
+    data_shape: [240, 320, 3]
+    fps: 30.0
+    data_dtype: "uint8"
+    buffer_size: 200
+    hardware_latency_ms: 33.0
+
+  # Bimanual follower robot (target robot for policy/human control)
+  - class: "I2RTRobot"
+    device_id: 1
+    mode: "follower"
+    gripper_type: "linear_4310"
+    bilateral_kp: 0.25
+    bilateral_kd: 0.5
+    data_shape: [14]
+    control_shape: [14]
+    fps: 100.0
+    command_fps: 100.0
+    data_dtype: "float64"
+    control_dtype: "float64"
+    buffer_size: 5000
+    control_buffer_size: 5000
+    left_server_host: "127.0.0.1"
+    right_server_host: "127.0.0.1"
+    left_server_port: 1234
+    right_server_port: 1235
+    left_can_channel: "can_follower_l"
+    right_can_channel: "can_follower_r"
+    launch_server_processes: true
+    server_startup_wait_s: 3.0
+    # Teleoperation source is leader robot state SHM.
+    control_shm_name: ["I2RTRobot_0_data"]
+    dual_control_mode: ${robot.dual_control_mode}
+    # Follower reads leader-owned button flag SHM for arbitration.
+    control_flag_shm_name: "I2RTRobot_0_control_flag"
+    home_joint_pos: ${robot.follower_home_joint_pos}
+    random_init_pose: ${oc.select:robot.random_init_pose,false}
+    random_init_pose_params: ${oc.select:robot.random_init_pose_params,null}
+    random_init_pose_sync: ${oc.select:robot.random_init_pose_sync,false}
+    signal_files: ${runtime.signal_files}
+
+  # Bimanual leader robot (read-only operator side)
+  # Publishes:
+  #   - state SHM: I2RTRobot_0_data (14)
+  #   - control flag SHM: I2RTRobot_0_control_flag (1)
+  - class: "I2RTRobot"
+    device_id: 0
+    mode: "leader"
+    gripper_type: "yam_teaching_handle"
+    bilateral_kp: 0.25
+    bilateral_kd: 0.5
+    data_shape: [14]
+    control_shape: [14]
+    fps: 100.0
+    command_fps: 100.0
+    data_dtype: "float64"
+    control_dtype: "float64"
+    buffer_size: 5000
+    control_buffer_size: 5000
+    left_server_host: "127.0.0.1"
+    right_server_host: "127.0.0.1"
+    left_server_port: 1236
+    right_server_port: 1237
+    left_can_channel: "can_leader_l"
+    right_can_channel: "can_leader_r"
+    launch_server_processes: true
+    server_startup_wait_s: 3.0
+    # In shared-control mode, leader follows follower only while policy is active.
+    control_shm_name: ["I2RTRobot_1_data"]
+    dual_control_mode: ${robot.dual_control_mode}
+    takeover_alignment: ${oc.select:robot.takeover_alignment,null}
+    home_joint_pos: ${robot.leader_home_joint_pos}
+    # The leader follows follower state after reset; do not sample independently.
+    random_init_pose: false
+    random_init_pose_sync: ${oc.select:robot.random_init_pose_sync,false}
+    signal_files: ${runtime.signal_files}

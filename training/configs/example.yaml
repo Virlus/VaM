@@ -1,0 +1,27 @@
+# Online DAgger/Learn from Experience; paired with deployment/configs/example.yaml.
+include: online.yaml
+variables:
+  run_name: example_run
+  split_root: /path/to/async
+  repo_prefix: example/${run_name}
+  action_offline_repo: example/offline_action
+  value_offline_repo: example/offline_value
+job:
+  offline_dataset_home: /path/to/offline/lerobot
+  hf_home: /path/to/hf_cache
+  base_params: /path/to/initial/checkpoint/params
+  norm_assets_dir: /path/to/initial/checkpoint/assets
+  norm_stats_path: /path/to/initial/checkpoint/assets/example/offline/norm_stats.json
+  resume: false
+  round_steps: 1000
+  num_train_steps: 8001
+  action_devices: 0,1,2,3,4,5,6,7
+  value_devices: 0,1,2,3,4,5,6,7
+  trainer_overrides:
+    common:
+      seed: 142
+      fsdp_devices: 2
+    action:
+      batch_size: 64
+    value:
+      batch_size: 32

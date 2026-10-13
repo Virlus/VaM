@@ -1,0 +1,62 @@
+{
+  "config": {
+    "advantage": {
+      "gae_lambda": 0.9,
+      "gamma": 0.999,
+      "horizon": 1,
+      "mode": "cloud_p70",
+      "percentile": 70
+    },
+    "alignment_tolerance_ms": 250,
+    "capture": {
+      "max_pending_episodes": 2,
+      "min_free_bytes": 0,
+      "queue_size": 2000,
+      "value_drain_s": 0
+    },
+    "fps": 30,
+    "image_color_order": "rgb",
+    "inputs": {
+      "control_flag": "control_flag",
+      "human_action": "human_action",
+      "img_ego": "img_ego",
+      "img_left": "img_left",
+      "img_right": "img_right",
+      "policy_action": "policy_action",
+      "state": "state",
+      "value_prediction": "value_prediction"
+    },
+    "latency_ms": {},
+    "output_dir": "unused_fixture_output",
+    "run_name": "legacy_parity",
+    "signal_files": {
+      "episode_result": "unused_fixture_episode_result",
+      "rollout_ready": "unused_fixture_rollout_ready",
+      "start_recording": "unused_fixture_start_recording",
+      "stop_recording": "unused_fixture_stop_recording"
+    },
+    "task_name": "pick cube",
+    "value_stride": 30,
+    "window_size": 100,
+    "writer": {
+      "image_writer_processes": 0,
+      "image_writer_threads": 1,
+      "video": {
+        "crf": 28,
+        "fast_decode": 0,
+        "g": 2,
+        "pix_fmt": "yuv420p",
+        "vcodec": "h264"
+      }
+    }
+  },
+  "policy": {
+    "checkpoint_dir": "/model/39999",
+    "checkpoint_id": "test_ckpt",
+    "checkpoint_index": 39999,
+    "policy_id": 0
+  },
+  "result": "failure",
+  "start_ns": 10000000000,
+  "stop_ns": 11310000000
+}

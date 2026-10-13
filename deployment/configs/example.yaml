@@ -1,0 +1,21 @@
+# Online DAgger/Learn from Experience example; fill machine and asset paths before launch.
+# Experiment hyperparameters match the archived deployment; identity is task-neutral.
+defaults:
+  - rollout
+  - _self_
+
+task: fold the t-shirt
+run_name: example_run
+start_index: 0
+checkpoint: /path/to/initial/checkpoint
+remote:
+  root: /path/to/async
+upload:
+  enabled: true
+online_training:
+  enabled: true
+  initial_policy_id: 0
+  initial_checkpoint_id: base
+  initial_checkpoint_index: 0
+  startup_checkpoint_dir: ${checkpoint}
+  max_current_policy_rollouts: 15

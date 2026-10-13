@@ -1,0 +1,175 @@
+# @package _global_
+# Reusable data collection recipe. Paths, task identity and upload options live in the main config.
+consumer:
+  type: lerobot_collect
+  robot_type: aloha_i2rt
+  capture:
+    summary_shm: device_summary_data
+    poll_interval: 0.005
+    queue_size: 5000
+    conversion_workers: ${lerobot.conversion_workers}
+    max_pending_episodes: ${lerobot.max_pending_episodes}
+    enable_button_control: true
+    initial_home_wait_s: 4.0
+    episode_home_wait_s: 4.0
+    teleop_start_wait_s: 0.05
+  inputs:
+    img_ego: OpenCVCameraDevice_${camera.ego_id}
+    img_left: OpenCVCameraDevice_${camera.left_id}
+    img_right: OpenCVCameraDevice_${camera.right_id}
+    leader_joint_pos: I2RTRobot_0
+    follower_joint_pos: I2RTRobot_1
+  conversion:
+    data_mode: offline
+    window_size: 100
+    fps: 30
+    max_time_diff_ms: 50.0
+    reward_range: binary
+    split_by_control_flag: false
+    latency_s:
+      img_ego: 0.0
+      img_left: 0.0
+      img_right: 0.0
+      leader_joint_pos: 0.0
+      follower_joint_pos: 0.0
+  outputs:
+    action:
+      # The local writer adds float32 advantage=[1] to every offline action row.
+      frame_stride: ${lerobot.action_stride}
+      stride_basis: action_index
+    value:
+      frame_stride: ${lerobot.value_stride}
+      stride_basis: action_index
+  writer:
+    image_writer_threads: 10
+    image_writer_processes: 5
+    video:
+      vcodec: libsvtav1
+      pix_fmt: yuv420p
+      g: 2
+      crf: 30
+      fast_decode: 0
+  features:
+    base_image:
+      dtype: video
+      shape:
+      - 360
+      - 640
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    left_wrist_image:
+      dtype: video
+      shape:
+      - 240
+      - 320
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    right_wrist_image:
+      dtype: video
+      shape:
+      - 240
+      - 320
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    state:
+      dtype: float32
+      shape:
+      - 14
+      names:
+      - channels
+    actions:
+      dtype: float32
+      shape:
+      - ${consumer.conversion.window_size}
+      - 14
+      names:
+      - window
+      - channels
+    reward:
+      dtype: float32
+      shape:
+      - ${consumer.conversion.window_size}
+      names:
+      - reward
+    value:
+      dtype: float32
+      shape:
+      - 1
+      names:
+      - value
+    success:
+      dtype: float32
+      shape:
+      - 1
+      names:
+      - success
+    next_base_image:
+      dtype: video
+      shape:
+      - 360
+      - 640
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    next_left_wrist_image:
+      dtype: video
+      shape:
+      - 240
+      - 320
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    next_right_wrist_image:
+      dtype: video
+      shape:
+      - 240
+      - 320
+      - 3
+      names:
+      - height
+      - width
+      - channel
+    next_state:
+      dtype: float32
+      shape:
+      - 14
+      names:
+      - channels
+    next_actions:
+      dtype: float32
+      shape:
+      - ${consumer.conversion.window_size}
+      - 14
+      names:
+      - window
+      - channels
+    data_source:
+      dtype: float32
+      shape:
+      - 1
+      names:
+      - source
+    terminate:
+      dtype: float32
+      shape:
+      - 1
+      names:
+      - terminate
+  anomaly_detection:
+    min_frames: 70
+    max_timestamp_gap: 1.0
+    frozen_data_threshold: 0.3
+    frozen_frame_diff_threshold: 0.0001

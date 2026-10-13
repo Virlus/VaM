@@ -1,0 +1,54 @@
+format: lerobot
+python: ${runtime.python.lerobot}
+upload_suffix: /ready
+payloads:
+  collect: lerobot_collect_v1
+  rollout: lerobot_direct_v1
+remote_subdirs:
+  collect: lerobot
+  rollout: lerobot_rollout_data
+rollout:
+  run_name: ${run_name}
+  window_size: 100
+  fps: 30
+  value_stride: 30
+  action_stride: 3
+  alignment_tolerance_ms: 250.0
+  image_color_order: rgb
+  latency_ms:
+    img_ego: 0.0
+    img_left: 0.0
+    img_right: 0.0
+  inputs:
+    img_ego: OpenCVCameraDevice_${camera.ego_id}_data
+    img_left: OpenCVCameraDevice_${camera.left_id}_data
+    img_right: OpenCVCameraDevice_${camera.right_id}_data
+    state: I2RTRobot_1_data
+    policy_action: I2RTRobot_1_control
+    human_action: I2RTRobot_0_data
+    control_flag: I2RTRobot_0_control_flag
+    value_prediction: policy_value_estimation
+  capture:
+    poll_interval: 0.002
+    preroll_s: 0.0
+    value_drain_s: 0.0
+    connect_timeout_s: 50.0
+    queue_size: 512
+    max_pending_episodes: 2
+    min_free_bytes: 2147483648
+  advantage:
+    mode: cloud_p70
+    percentile: 70.0
+    gamma: 0.999
+    gae_lambda: 0.9
+    horizon: 1
+    action_fps: 100.0
+  writer:
+    image_writer_processes: 0
+    image_writer_threads: 2
+    video:
+      vcodec: libsvtav1
+      pix_fmt: yuv420p
+      g: 2
+      crf: 30
+      fast_decode: 0

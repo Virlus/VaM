@@ -1,0 +1,41 @@
+enabled: true
+summary_shm_name: ${summary_shm}
+output_dir: ${recording_output_dir}
+save_interval: 0.001
+start_idx: ${start_index}
+image_size: null
+async_write: true
+queue_size: 50000
+robot_type: I2RTRobot
+task_name: ${task}
+ready_timeout: 60.0
+auto_start: false
+python_path: ${storage.python}
+anomaly_config_path: null
+policy_outputs:
+  value:
+    name: policy_value_estimation
+    device_type: PolicyValue
+    buffer_size: 100
+    dtype: float64
+    enabled: true
+  action_chunk:
+    name: action_chunk
+    device_type: ActionChunk
+    buffer_size: 200
+    dtype: float64
+    enabled: true
+control_shms: ${policy.controls}
+excluded_control_flag_values:
+- 0.5
+episode_control:
+  enabled: true
+  success_key: s
+  failure_key: f
+  discard_key: d
+  auto_restart: true
+  home_wait_time: 20.0
+format: ${storage.format}
+signal_timeout: 300.0
+shutdown_timeout: 600.0
+lerobot: ${storage.rollout}

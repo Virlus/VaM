@@ -1,0 +1,15 @@
+enabled: false
+data_dir: ${recording_output_dir}${storage.upload_suffix}
+remote_path: ${remote.root}/${storage.remote_subdirs.${mode}}/${run_name}
+host: ${remote.host}
+port: ${remote.port}
+username: ${remote.username}
+poll_interval: 10
+ssh_key_path: ${remote.ssh_key_path}
+upload_bandwidth_mbps: 50
+download_bandwidth_mbps: 70
+upload_method: rsync
+upload_rsync_fallback_to_sftp: true
+resume_rollout_upload: true
+online_training: ${online_training}
+payload_format: ${storage.payloads.${mode}}

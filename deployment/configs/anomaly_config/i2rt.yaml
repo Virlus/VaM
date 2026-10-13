@@ -1,0 +1,22 @@
+anomaly_detection:
+  # Expected FPS ranges [min, max]
+  expected_fps:
+    pose: [88, 92]      # ViveTracker typically ~100Hz
+    image: [28, 32]      # Camera typically ~30Hz
+    grip: [38, 42]       # Gripper encoder typically ~40Hz
+
+  # Length check
+  min_frames: 70         # Minimum frames for valid recording
+
+  # Image checks
+  image_check_ratio: 0.1  # Check 10% of images for black frames
+
+  # Zero/static data checks
+  zero_data_threshold: 0.3              # Ratio of zeros considered error
+  frozen_data_threshold: 0.9            # Ratio of frozen frames considered error
+  frozen_frame_diff_threshold: 1e-4    # Max difference between consecutive frames to consider as frozen
+
+  # Trajectory checks
+  max_position_jump: 0.04    # Maximum position jump in meters
+  max_velocity: 3.0         # Maximum velocity in m/s
+  max_quaternion_jump: 10  # Maximum quaternion component jump

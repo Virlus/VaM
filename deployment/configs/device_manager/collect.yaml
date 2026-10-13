@@ -1,0 +1,6 @@
+device_manager:
+  type: base
+  master_device_id: 0
+  params:
+    config_path: ${hydra:runtime.output_dir}/config_resolved.yaml
+    buffer_size: 100

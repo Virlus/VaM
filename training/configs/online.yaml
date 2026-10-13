@@ -1,0 +1,42 @@
+# Online DAgger/Learn from Experience: LeRobot ingestion and split-training template.
+template_version: 1
+variables:
+  repo_prefix: example/${run_name}
+  run_name: example_run
+  split_root: /path/to/async
+  action_offline_repo: example/offline_action
+  value_offline_repo: example/offline_value
+runtime:
+  python:
+    ingest: .venv/bin/python
+    training: .venv/bin/python
+job:
+  run_name: ${run_name}
+  split_root: ${split_root}
+  cloud_root: ${split_root}/cloud_root/${run_name}
+  inbox: ${split_root}/lerobot_rollout_data/${run_name}
+  dataset_home: ${split_root}/lerobot/${run_name}
+  offline_dataset_home: ${split_root}/lerobot
+  hf_home: ${split_root}/hf_cache
+  work_dir: ${split_root}/work/${run_name}/ingest
+  log_dir: ${split_root}/logs/${run_name}
+  repo_prefix: ${repo_prefix}
+  action_offline_repo: ${action_offline_repo}
+  value_offline_repo: ${value_offline_repo}
+  run_once: false
+  poll_interval_s: 10
+  checkpoint_poll_interval_s: 30
+  base_params: /path/to/full/checkpoint/params
+  norm_assets_dir: /path/to/checkpoint/assets
+  norm_stats_path: null
+  trainer_overrides:
+    common: {}
+    action: {}
+    value: {}
+  round_steps: 200
+  num_train_steps: 20000
+  resume: false
+  action_devices: 0,1
+  value_devices: 2,3
+  xla_preallocate: true
+  xla_memory_fraction: 0.9
