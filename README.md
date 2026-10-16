@@ -24,7 +24,7 @@ Yang Jin<sup>1</sup>,
 </p>
 
 <p align="center">
-  <a href="https://virlus.github.io/vam/vam.pdf"><img src="https://img.shields.io/badge/Paper-b31b1b?style=for-the-badge" alt="Paper"></a>
+  <a href="https://arxiv.org/pdf/2610.22368"><img src="https://img.shields.io/badge/Paper-b31b1b?style=for-the-badge" alt="Paper"></a>
   <a href="https://virlus.github.io/vam/"><img src="https://img.shields.io/badge/Project-Page-2563eb?style=for-the-badge" alt="Project Page"></a>
 </p>
 
@@ -137,7 +137,7 @@ policy:
   history_with_value: true       # Include past values in the action input
 ```
 
-**References:** \[[Paper §3.2](https://virlus.github.io/vam/vam.pdf)\] \[[Training recipe](training/src/vam/training/config/__init__.py)\] \[[Deployment settings](deployment/configs/policy/vam.yaml)\] \[[Model guide](training/docs/vam_model_release.md)\]
+**References:** \[[Paper §3.2](https://arxiv.org/pdf/2610.22368)\] \[[Training recipe](training/src/vam/training/config/__init__.py)\] \[[Deployment settings](deployment/configs/policy/vam.yaml)\] \[[Model guide](training/docs/vam_model_release.md)\]
 
 <a id="acknowledgements"></a>
 
